@@ -922,7 +922,7 @@ class VimeoAlbumIE(VimeoBaseInfoExtractor):
     }]
     _PAGE_SIZE = 100
 
-    def _fetch_page(self, album_id, authorizaion, hashed_pass, page):
+    def _fetch_page(self, album_id, authorization, hashed_pass, page):
         api_page = page + 1
         query = {
             'fields': 'link,uri',
@@ -934,7 +934,7 @@ class VimeoAlbumIE(VimeoBaseInfoExtractor):
         videos = self._download_json(
             'https://api.vimeo.com/albums/%s/videos' % album_id,
             album_id, 'Downloading page %d' % api_page, query=query, headers={
-                'Authorization': 'jwt ' + authorizaion,
+                'Authorization': 'jwt ' + authorization,
             })['data']
         for video in videos:
             link = video.get('link')
@@ -946,10 +946,13 @@ class VimeoAlbumIE(VimeoBaseInfoExtractor):
 
     def _real_extract(self, url):
         album_id = self._match_id(url)
-        webpage = self._download_webpage(url, album_id)
-        viewer = self._parse_json(self._search_regex(
-            r'bootstrap_data\s*=\s*({.+?})</script>',
-            webpage, 'bootstrap data'), album_id)['viewer']
+        viewer = self._download_json(
+            'https://vimeo.com/_rv/viewer', album_id, fatal=False)
+        if not viewer:
+            webpage = self._download_webpage(url, album_id)
+            viewer = self._parse_json(self._search_regex(
+                r'bootstrap_data\s*=\s*({.+?})</script>',
+                webpage, 'bootstrap data'), album_id)['viewer']
         jwt = viewer['jwt']
         album = self._download_json(
             'https://api.vimeo.com/albums/' + album_id,
@@ -1116,6 +1119,12 @@ class VHXEmbedIE(VimeoBaseInfoExtractor):
     IE_NAME = 'vhx:embed'
     _VALID_URL = r'https?://embed\.vhx\.tv/videos/(?P<id>\d+)'
 
+    @staticmethod
+    def _extract_url(webpage):
+        mobj = re.search(
+            r'<iframe[^>]+src="(https?://embed\.vhx\.tv/videos/\d+[^"]*)"', webpage)
+        return unescapeHTML(mobj.group(1)) if mobj else None
+
     def _real_extract(self, url):
         video_id = self._match_id(url)
         webpage = self._download_webpage(url, video_id)
@@ -1124,5 +1133,6 @@ class VHXEmbedIE(VimeoBaseInfoExtractor):
             'ott data'), video_id, js_to_json)['config_url']
         config = self._download_json(config_url, video_id)
         info = self._parse_config(config, video_id)
+        info['id'] = video_id
         self._vimeo_sort_formats(info['formats'])
         return info
