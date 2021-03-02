@@ -1,3 +1,8 @@
+*** 21.204.0 ***
+
+Use xbmc.LOGINFO
+Updated youtube-dl core to 2021.02.04.1
+
 *** 20.616.0 ***
 
 Updated youtube-dl core to 2020.06.16.1
