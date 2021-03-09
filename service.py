@@ -58,7 +58,7 @@ class Service():
             t.start()
 
             while t.is_alive():
-                if xbmc.waitForAbort(0.1):
+                if monitor.waitForAbort(0.1):
                     break
 
             info = self.getNextQueuedDownload()
