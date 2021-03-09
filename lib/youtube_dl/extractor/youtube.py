@@ -1712,9 +1712,9 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
             'thumbnails': thumbnails,
             'description': video_description,
             # Hack 20210309 : Fix extract uploaddate in YT-DL script module Kodi
-            'upload_date': unified_strdate(
-                microformat.get('uploadDate')),
-                # or search_meta('uploadDate')),
+            # 'upload_date': unified_strdate(
+            #     microformat.get('uploadDate'),
+            #     or search_meta('uploadDate')),
             'uploader': video_details['author'],
             'uploader_id': self._search_regex(r'/(?:channel|user)/([^/?&#]+)', owner_profile_url, 'uploader id') if owner_profile_url else None,
             'uploader_url': owner_profile_url,
