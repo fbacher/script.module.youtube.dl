@@ -463,6 +463,13 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
         signalPayload['path'] = filepath
         AddonSignals.sendSignal('download.finished', signalPayload, source_id='script.module.youtube.dl')
 
+    # youtube-dl sometimes creates mkv file when merging non compatible parts,
+    # resulting in modified filepath. <ie_result> is fortunately updated in place by youtube-dl
+    ext = ie_result['ext']
+    if not filepath.endswith(ext):
+        base, _ = os.path.splitext(filepath)
+        filepath = u'{}.{}'.format(base, ext)
+
     return DownloadResult(True, filepath=filepath)
 
 

@@ -85,6 +85,8 @@ def _processSettingForWrite(value):
         value = binascii.hexlify('\0'.join(value))
     elif isinstance(value, bool):
         value = value and 'true' or 'false'
+    elif isinstance(value, (str, unicode)):
+        return value
     return str(value)
 
 

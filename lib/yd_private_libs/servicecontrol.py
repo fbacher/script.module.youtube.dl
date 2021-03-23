@@ -28,7 +28,7 @@ def safeDecode(enc_text):
 
 
 class ServiceControl(object):
-    def download(self, info, path, duration):
+    def download(self, info, path, filename, duration):
         addonPath = xbmcTranslatePath(util.ADDON.getAddonInfo('path')).decode('utf-8')
         service = os.path.join(addonPath, 'service.py')
         data = {'data': info, 'path': path, 'filename': filename, 'duration': duration}
