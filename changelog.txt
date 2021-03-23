@@ -1,3 +1,8 @@
+*** 21.xxx.x ***
+
+Updated youtube-dl core to 2021.xx.xx
+Fix error in background download (thanks jmzambon)
+
 *** 21.303.0 ***
 
 Updated youtube-dl core to 2021.03.03
