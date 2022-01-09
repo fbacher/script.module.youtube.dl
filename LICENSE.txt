@@ -1,0 +1,11 @@
+Several licenses apply to script.module.youtube.dl addon:
+
+An GPL V2 license for the addon code to interface with yt-dlp.
+The license is in the file: ./LICENSE-addon.txt
+
+An unlicense for the addon code to interface with yt-dlp. The
+./lib/yt_dlp directory was copied directly from the yt-dlp's
+product's ./yt_dlp directory. The license for it is in the file:
+./lib/yt_dlp/LICENSE. The version information is contained in
+./lib/yt_dlp/update-version.py. The yt-dlp product originated
+from https://github.com/yt-dlp/yt-dlp.
