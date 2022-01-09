@@ -454,7 +454,7 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     try:
         AddonSignals.sendSignal('download.started', signalPayload, source_id='script.module.youtube.dl')
         dl_result = YoutubeDLWrapper.download(ie_result)
-    except YoutubeDLWrapper.youtube_dl.DownloadError as e:
+    except YoutubeDLWrapper.DownloadError as e:
         return DownloadResult(False, e.message, filepath=filepath)
     except YoutubeDLWrapper.DownloadCanceledException:
         return DownloadResult(False, status='canceled', filepath=filepath)
@@ -513,7 +513,7 @@ def generateBlacklist(regexs):
     Extractors that match any of the regular expressions are added.
     """
     import re
-    from youtube_dl.extractor import gen_extractors
+    from yt_dlp.extractor import gen_extractors
     for ie in gen_extractors():
         for r in regexs:
             if re.search(r, ie.IE_NAME):

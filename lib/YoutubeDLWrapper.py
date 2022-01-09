@@ -2,7 +2,13 @@
 import sys
 import time
 import datetime
+import importlib
+from types import ModuleType
 from kodi_six import xbmc
+import yt_dlp as yt_lib
+from yt_dlp.utils import std_headers as std_headers
+from yt_dlp.utils import DownloadError as DownloadError
+from yt_dlp import YoutubeDL as YoutubeDL
 from yd_private_libs import util, updater
 import YDStreamUtils as StreamUtils
 
@@ -10,7 +16,6 @@ updater.updateCore()
 
 updater.set_youtube_dl_importPath()
 
-from youtube_dl.utils import std_headers, DownloadError  # noqa E402
 
 DownloadError  # Hides IDE warnings
 
@@ -37,15 +42,10 @@ except ImportError:
 
 ###############################################################################
 
-try:
-    import youtube_dl
-except Exception:
-    util.ERROR('Failed to import youtube-dl')
-    youtube_dl = None
 
-coreVersion = youtube_dl.version.__version__
+coreVersion = yt_lib.version.__version__
 updater.saveVersion(coreVersion)
-util.LOG('youtube_dl core version: {0}'.format(coreVersion))
+util.LOG('yt_lib core version: {0}'.format(coreVersion))
 
 ###############################################################################
 # FIXES: datetime.datetime.strptime evaluating as None in Kodi
@@ -191,7 +191,7 @@ class CallbackMessage(str):
         self.info = info
 
 
-class YoutubeDLWrapper(youtube_dl.YoutubeDL):
+class YoutubeDLWrapper(YoutubeDL):
     """
     A wrapper for youtube_dl.YoutubeDL providing message handling and
     progress callback.
@@ -203,7 +203,7 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
         self._overrideParams = {}
         self._monitor = xbmc.Monitor()
 
-        youtube_dl.YoutubeDL.__init__(self, *args, **kwargs)
+        YoutubeDL.__init__(self, *args, **kwargs)
 
     def showMessage(self, msg):
         global _CALLBACK
@@ -287,7 +287,7 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
         #     if hasattr(module, 'date_from_str'):
         #         module.date_from_str = _date_from_str_wrap
         ########################################################################
-        youtube_dl.YoutubeDL.add_info_extractor(self, ie)
+        YoutubeDL.add_info_extractor(self, ie)
 
     def to_stdout(self, message, skip_eol=False, check_quiet=False):
         """Print message to stdout if not in quiet mode."""
@@ -301,7 +301,7 @@ class YoutubeDLWrapper(youtube_dl.YoutubeDL):
 
     def to_stderr(self, message):
         """Print message to stderr."""
-        assert isinstance(message, basestring)
+        assert isinstance(message, str)
         if self.params.get('logger'):
             self.params['logger'].error(message)
         else:
@@ -336,7 +336,7 @@ def _getYTDL():
 
 
 def download(info):
-    from youtube_dl import downloader
+    from yt_dlp import downloader
     ytdl = _getYTDL()
     if 'http_headers' not in info:
         info['http_headers'] = std_headers

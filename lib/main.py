@@ -125,11 +125,11 @@ class main():
 
     def showInfo(self, updated=False):
         updater.set_youtube_dl_importPath()
-        from lib import youtube_dl
+        import lib.yt_dlp as yt_lib
 
         line1 = T(32043).format(
             '[B]{0}[/B]'.format(util.ADDON.getAddonInfo('version')))
-        version = youtube_dl.version.__version__
+        version = yt_lib.version.__version__
         line2 = T(32044).format('[B]{0}[/B]'.format(version))
 
         xbmcgui.Dialog().ok(T(32045), line1 + ' ' + line2)
