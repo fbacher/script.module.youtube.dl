@@ -219,10 +219,7 @@ def getDownloadPath(use_default=None):
     if not path:
         return
     util.setSetting('last_download_path', path)
-    try:
-        return path.decode('utf8')
-    except (UnicodeEncodeError, AttributeError):
-        return path
+    return path
 
 
 SIZE_NAMES = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
