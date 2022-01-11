@@ -2,20 +2,21 @@
 import sys
 import time
 import datetime
-import importlib
-from types import ModuleType
 from kodi_six import xbmc
-import yt_dlp as yt_lib
-from yt_dlp.utils import std_headers as std_headers
-from yt_dlp.utils import DownloadError as DownloadError
-from yt_dlp import YoutubeDL as YoutubeDL
 from yd_private_libs import util, updater
 import YDStreamUtils as StreamUtils
+from strptime_patch import StripTimePatch;
+
+# Apply datetime.strptime patch, if not already done.
+
+StripTimePatch.monkey_patch_strptime()
 
 updater.updateCore()
 
 updater.set_youtube_dl_importPath()
 
+from yt_dlp.utils import std_headers as std_headers # noqa E402
+from yt_dlp.utils import DownloadError as DownloadError # noqa E402
 
 DownloadError  # Hides IDE warnings
 
@@ -42,52 +43,17 @@ except ImportError:
 
 ###############################################################################
 
+try:
+    import yt_dlp as yt_lib
+except Exception:
+    util.ERROR('Failed to import youtube-dl')
+    yt_lib = None
 
 coreVersion = yt_lib.version.__version__
 updater.saveVersion(coreVersion)
 util.LOG('yt_lib core version: {0}'.format(coreVersion))
 
-###############################################################################
-# FIXES: datetime.datetime.strptime evaluating as None in Kodi
-###############################################################################
-
-try:
-    datetime.datetime.strptime('0', '%H')
-except TypeError:
-    # Fix for datetime issues with XBMC/Kodi
-    def redefine_datetime(orig):
-        class datetime(orig):
-            @classmethod
-            def strptime(cls, dstring, dformat):
-                return datetime(*(time.strptime(dstring, dformat)[0:6]))
-
-            def __repr__(self):
-                return 'datetime.' + orig.__repr__(self)
-
-        return datetime
-
-    datetime.datetime = redefine_datetime(datetime.datetime)
-
-# _utils_unified_strdate = youtube_dl.utils.unified_strdate
-# _utils_date_from_str = youtube_dl.utils.date_from_str
-
-
-# def _unified_strdate_wrap(date_str):
-#     try:
-#         return _utils_unified_strdate(date_str)
-#     except:
-#         return '00000000'
-# youtube_dl.utils.unified_strdate = _unified_strdate_wrap
-
-
-# def _date_from_str_wrap(date_str):
-#     try:
-#         return _utils_date_from_str(date_str)
-#     except:
-#         return datetime.datetime.now().date()
-# youtube_dl.utils.date_from_str = _date_from_str_wrap
-
-###############################################################################
+from yt_dlp import YoutubeDL as YoutubeDL
 
 _YTDL = None
 _DISABLE_DASH_VIDEO = util.getSetting('disable_dash_video', True)

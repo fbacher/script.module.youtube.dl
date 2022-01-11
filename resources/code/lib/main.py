@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
-from lib.yd_private_libs import util, servicecontrol, updater
+from yd_private_libs import util, servicecontrol, updater
 from kodi_six import xbmc
 from kodi_six import xbmcgui
 
