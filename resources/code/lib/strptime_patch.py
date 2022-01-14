@@ -19,7 +19,7 @@ class StripTimePatch:
     that some library code uses strptime and there will still be potential for
     incorrect results or a Kodi crash.
 
-    The other option is to call patch_strptime at your addon's startup. This
+    The other option is to call monkey_patch_strptime at your addon's startup. This
     will Monkey-Patch striptime with the version here. It is voodoo like,
     but that is done a bit in Python.
     """
