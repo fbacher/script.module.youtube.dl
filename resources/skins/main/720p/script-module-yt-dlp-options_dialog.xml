@@ -13,7 +13,7 @@
 			<top>-10</top>
 			<width>620</width>
 			<height>420</height>
-			<texture border="20">script-module-youtube-dl-shadow.png</texture>
+			<texture border="20">script-module-yt-dlp-shadow.png</texture>
 		</control>
 		<control type="image">
 			<description>background image</description>
@@ -21,7 +21,7 @@
 			<top>0</top>
 			<width>600</width>
 			<height>400</height>
-			<texture border="20">script-module-youtube-dl-dialog_back.png</texture>
+			<texture border="20">script-module-yt-dlp-dialog_back.png</texture>
 		</control>
 		<control type="grouplist" id="100">
 			<description>grouplist for context buttons</description>
@@ -33,7 +33,7 @@
 
             <control type="button" id="200">
     			<description>Stop Current Download</description>
-                <enable>String.IsEqual(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE)</enable>
+                <enable>String.IsEqual(Window(10000).Property(script.module.yt-dlp_STATUS),ACTIVE)</enable>
     			<left>-</left>
     			<top>-</top>
     			<width>560</width>
@@ -43,13 +43,13 @@
     			<textcolor>FF999999</textcolor>
     			<focusedcolor>FFFFFFFF</focusedcolor>
                 <disabledcolor>40999999</disabledcolor>
-    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
-                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
-                <label>$ADDON[script.module.youtube.dl 32030]</label>
+    			<texturefocus border="8">script-module-yt-dlp-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-yt-dlp-button.png</texturenofocus>
+                <label>$ADDON[script.module.yt-dlp 32030]</label>
     		</control>
             <control type="button" id="201">
     			<description>Stop All Downloads</description>
-                <enable>String.IsEqual(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE)</enable>
+                <enable>String.IsEqual(Window(10000).Property(script.module.yt-dlp_STATUS),ACTIVE)</enable>
     			<left>-</left>
     			<top>-</top>
     			<width>560</width>
@@ -59,13 +59,13 @@
     			<textcolor>FF999999</textcolor>
     			<focusedcolor>FFFFFFFF</focusedcolor>
                 <disabledcolor>40999999</disabledcolor>
-    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
-                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
-                <label>$ADDON[script.module.youtube.dl 32031]</label>
+    			<texturefocus border="8">script-module-yt-dlp-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-yt-dlp-button.png</texturenofocus>
+                <label>$ADDON[script.module.yt-dlp 32031]</label>
     		</control>
             <control type="button" id="202">
     			<description>Manage Queue</description>
-                <enable>String.IsEqual(Window(10000).Property(script.module.youtube.dl_STATUS),ACTIVE) + IntegerGreaterThan(Window(10000).property(XBMCJsonRAFifoQueue_download.queue.size),0)</enable>
+                <enable>String.IsEqual(Window(10000).Property(script.module.yt-dlp_STATUS),ACTIVE) + IntegerGreaterThan(Window(10000).property(XBMCJsonRAFifoQueue_download.queue.size),0)</enable>
     			<left>-</left>
     			<top>-</top>
     			<width>560</width>
@@ -75,13 +75,13 @@
     			<textcolor>FF999999</textcolor>
     			<focusedcolor>FFFFFFFF</focusedcolor>
                 <disabledcolor>40999999</disabledcolor>
-    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
-                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
-                <label>$ADDON[script.module.youtube.dl 32032] ($INFO[Window(10000).property(XBMCJsonRAFifoQueue_download.queue.size)])</label>
+    			<texturefocus border="8">script-module-yt-dlp-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-yt-dlp-button.png</texturenofocus>
+                <label>$ADDON[script.module.yt-dlp 32032] ($INFO[Window(10000).property(XBMCJsonRAFifoQueue_download.queue.size)])</label>
     		</control>
             <control type="button" id="203">
     			<description>Download Currently Playing Video</description>
-                <enable>Player.HasVideo + !IsEmpty(Window(10000).Property(script.module.youtube.dl_VALID))</enable>
+                <enable>Player.HasVideo + !IsEmpty(Window(10000).Property(script.module.yt-dlp_VALID))</enable>
     			<left>-</left>
     			<top>-</top>
     			<width>560</width>
@@ -91,9 +91,9 @@
     			<textcolor>FF999999</textcolor>
     			<focusedcolor>FFFFFFFF</focusedcolor>
                 <disabledcolor>40999999</disabledcolor>
-    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
-                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
-                <label>$ADDON[script.module.youtube.dl 32033]</label>
+    			<texturefocus border="8">script-module-yt-dlp-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-yt-dlp-button.png</texturenofocus>
+                <label>$ADDON[script.module.yt-dlp 32033]</label>
     		</control>
             <control type="button" id="204">
     			<description>Settings</description>
@@ -106,9 +106,9 @@
     			<textcolor>FF999999</textcolor>
     			<focusedcolor>FFFFFFFF</focusedcolor>
                 <disabledcolor>40999999</disabledcolor>
-    			<texturefocus border="8">script-module-youtube-dl-button_focus.png</texturefocus>
-                <texturenofocus border="8">script-module-youtube-dl-button.png</texturenofocus>
-                <label>$ADDON[script.module.youtube.dl 32034]</label>
+    			<texturefocus border="8">script-module-yt-dlp-button_focus.png</texturefocus>
+                <texturenofocus border="8">script-module-yt-dlp-button.png</texturenofocus>
+                <label>$ADDON[script.module.yt-dlp 32034]</label>
     		</control>
 		</control>
 	</controls>

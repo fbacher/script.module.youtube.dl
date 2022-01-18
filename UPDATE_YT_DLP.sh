@@ -37,7 +37,7 @@ echo addon version bump. ex: 2021.12.27.0
 
 echo 
 echo current yt-dlp version:
-sed -rf /tmp/youtube-dl.tmp external/yt-dlp/yt_dlp/version.py
+sed -rf /tmp/yt-dlp.tmp external/yt-dlp/yt_dlp/version.py
 
 echo 
 echo checkin all files, as appropriate

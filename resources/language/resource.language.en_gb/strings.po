@@ -1,4 +1,10 @@
-# XBMC Media Center language file
+# Kodi Media Center language file
+# Addon Name: yt-dlp Control
+# Addon id: script.module.yt-dlp
+# Addon Provider: fbacher
+#
+# Note: this project is a follow-on to the script.module.youtube.dl project
+# Very few message changes have been made (change from "youtube-dl" to "yt-dlp"
 msgid ""
 msgstr ""
 "Project-Id-Version: XBMC-Addons\n"
@@ -94,7 +100,7 @@ msgid "Advanced"
 msgstr ""
 
 msgctxt "#32021"
-msgid "Use user updated youtube-dl core version"
+msgid "Use user updated yt-dlp core version"
 msgstr ""
 
 msgctxt "#32022"
@@ -106,7 +112,7 @@ msgid "Update now"
 msgstr ""
 
 msgctxt "#32024"
-msgid "View youtube-dl core info"
+msgid "View yt-dlp core info"
 msgstr ""
 
 msgctxt "#32025"
@@ -118,7 +124,7 @@ msgid "Highest Available"
 msgstr ""
 
 msgctxt "#32027"
-msgid "Enable youtube-dl verbose logging"
+msgid "Enable yt-dlp verbose logging"
 msgstr ""
 
 msgctxt "#32028"

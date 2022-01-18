@@ -17,7 +17,7 @@ try:
 except ImportError:
     IS_WEB = True
 
-ADDON = xbmcaddon.Addon(id='script.module.youtube.dl')
+ADDON = xbmcaddon.Addon(id='script.module.yt-dlp')
 T = ADDON.getLocalizedString
 
 PROFILE_PATH = xbmcTranslatePath(ADDON.getAddonInfo('profile'))
@@ -39,7 +39,7 @@ DEBUG = ADDON.getSetting('debug') == 'true'
 def LOG(msg, debug=False):
     if debug and not DEBUG:
         return
-    xbmc.log('script.module.youtube.dl: {0}'.format(msg), xbmc.LOGINFO)
+    xbmc.log('script.module.yt-dlp: {0}'.format(msg), xbmc.LOGINFO)
 
 
 def ERROR(msg=None, hide_tb=False):

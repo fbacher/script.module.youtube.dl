@@ -1,6 +1,7 @@
-Several licenses apply to script.module.youtube.dl addon:
+Several licenses apply to script.module.yt-dlp addon:
 
-An GPL V2 license for the addon code to interface with yt-dlp.
+An GPL V2 license for the addon code to interface with yt-dlp. This code
+was taken from script.module.youtube.dl with very few modifications.
 The license is in the file: ./LICENSE-addon.txt
 
 An unlicense for the yt-dlp, which this addon is a wrapper for. The

@@ -2,7 +2,7 @@
 import os
 import math
 from kodi_six import xbmc
-from yd_private_libs import util
+from k_yt_dlp.yd_private_libs import util
 
 IS_WEB = False
 try:

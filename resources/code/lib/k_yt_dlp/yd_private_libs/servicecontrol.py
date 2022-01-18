@@ -66,8 +66,8 @@ class ServiceControl(object):
 
     @property
     def status(self):
-        return xbmc.getInfoLabel('Window(10000).Property(script.module.youtube.dl_STATUS)')
+        return xbmc.getInfoLabel('Window(10000).Property(script.module.yt-dlp_STATUS)')
 
     @status.setter
     def status(self, value):
-        xbmcgui.Window(10000).setProperty('script.module.youtube.dl_STATUS', value)
+        xbmcgui.Window(10000).setProperty('script.module.yt-dlp_STATUS', value)
