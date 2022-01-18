@@ -8,7 +8,7 @@ import datetime
 import time
 
 
-class StripTimePatch:
+class StripTimePatch(datetime.datetime):
     """
     Contains a work around for a complex bug in datetime.strptime that only
     impacts embedded Python, which Kodi uses. For more info on the defect,
@@ -33,10 +33,12 @@ class StripTimePatch:
             # Globally replace Python's datetime.datetime.strptime with
             # the version here.
 
-            datetime.datetime = StripTimePatch.strptime
+            datetime.datetime.strptime = StripTimePatch.strptime
+        # Test
+        datetime.datetime.strptime('12', '%H')
 
-    @staticmethod
-    def strptime(date_string: str, date_format: str) -> datetime.datetime:
+    @classmethod
+    def strptime(cls, date_string: str, date_format: str) -> datetime.datetime:
         """
         Monkey-Patch dattime.strptime with time.strptime in order to
         work around a known embedded python problem.

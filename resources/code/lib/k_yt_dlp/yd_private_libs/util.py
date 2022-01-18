@@ -27,8 +27,7 @@ ADDON_PATH = xbmcTranslatePath(ADDON.getAddonInfo('path'))
 if isinstance(ADDON_PATH, bytes):
     ADDON_PATH = ADDON_PATH.decode('utf-8')
 TMP_PATH = os.path.join(PROFILE_PATH, 'tmp')
-if not os.path.exists(TMP_PATH):
-    os.makedirs(TMP_PATH)
+os.makedirs(TMP_PATH,  mode=0o755, exist_ok=True)
 QUEUE_FILE = os.path.join(PROFILE_PATH, 'download.queue')
 MODULE_PATH = os.path.join(ADDON_PATH, 'lib')
 
