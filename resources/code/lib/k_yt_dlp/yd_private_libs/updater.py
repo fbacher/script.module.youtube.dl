@@ -2,17 +2,17 @@
 import sys
 from . import util
 
-LATEST_URL = 'https://yt-dl.org/latest/youtube-dl.tar.gz'
-VERSION_URL = 'https://yt-dl.org/latest/version'
+LATEST_URL = 'https://yt-dlp.org/latest/yt-dlp.tar.gz'
+VERSION_URL = 'https://yt-dlp.org/latest/version'
 PY3 = sys.version_info >= (3, 0)
 
-def set_youtube_dl_importPath():
+def set_yt_dlp_importPath():
     return
     # if not util.getSetting('use_update_version',True): return
     import os
     from kodi_six import xbmc
-    youtube_dl_path = os.path.join(util.PROFILE_PATH, 'youtube-dl')
-    if not os.path.exists(youtube_dl_path):
+    yt_dlp_path = os.path.join(util.PROFILE_PATH, 'yt-dlp')
+    if not os.path.exists(yt_dlp_path):
         return
 
 
@@ -38,7 +38,7 @@ def updateCore(force=False):
     import urllib2
     import tarfile
 
-    util.LOG('Checking for new youtube_dl core version...')
+    util.LOG('Checking for new yt-dlp core version...')
 
     currentVersion = util.getSetting('core_version')
     try:
@@ -50,11 +50,11 @@ def updateCore(force=False):
         util.ERROR()
         return False
 
-    util.LOG('Updating youtube_dl core to new version: {0}'.format(newVersion))
+    util.LOG('Updating yt-dlp core to new version: {0}'.format(newVersion))
 
     profile = xbmcTranslatePath(util.ADDON.getAddonInfo('profile')).decode('utf-8')
-    archivePath = os.path.join(profile, 'youtube_dl.tar.gz')
-    extractedPath = os.path.join(profile, 'youtube-dl')
+    archivePath = os.path.join(profile, 'yt-dlp.tar.gz')
+    extractedPath = os.path.join(profile, 'yt-dlp')
 
     try:
         if os.path.exists(extractedPath):
@@ -64,7 +64,7 @@ def updateCore(force=False):
 
         urlretrieve(LATEST_URL, filename=archivePath)
         with tarfile.open(archivePath, mode='r:gz') as tf:
-            members = [m for m in tf.getmembers() if m.name.startswith('youtube-dl/youtube_dl')]  # get just the files from the youtube_dl source directory
+            members = [m for m in tf.getmembers() if m.name.startswith('yt-dlp/yt-dlp')]  # get just the files from the yt-dlp source directory
             tf.extractall(path=profile, members=members)
     except Exception:
         util.ERROR('Core update FAILED')

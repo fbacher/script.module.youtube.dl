@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
-from yd_private_libs import util, servicecontrol, updater
+
+from k_yt_dlp.yd_private_libs import util, servicecontrol, updater
 from kodi_six import xbmc
 from kodi_six import xbmcgui
 
@@ -27,12 +28,12 @@ class PlayMonitor(xbmc.Player):
             pass
 
         xbmcgui.Window(10000).setProperty(
-            'script.module.youtube.dl_VALID', valid)
+            'script.module.yt-dlp_VALID', valid)
 
 
 def showOptions(main=None):
     w = OptionsDialog(
-        'script-module-youtube-dl-options_dialog.xml',
+        'script-module-k_yt_dlp-options_dialog.xml',
         util.ADDON.getAddonInfo('path'), 'main', '720p', main=main
     )
     w.doModal()
@@ -96,7 +97,7 @@ class main():
 
         util.LOG(repr(info), debug=True)
 
-        from lib import YDStreamExtractor
+        from k_yt_dlp import YDStreamExtractor
         YDStreamExtractor.handleDownload(info, filename=title, bg=True)
 
     def stopDownload(self):
@@ -124,8 +125,8 @@ class main():
         return updater.updateCore(force=True)
 
     def showInfo(self, updated=False):
-        updater.set_youtube_dl_importPath()
-        import lib.yt_dlp as yt_lib
+        updater.set_yt_dlp_importPath()
+        import k_yt_dlp.yt_dlp as yt_lib
 
         line1 = T(32043).format(
             '[B]{0}[/B]'.format(util.ADDON.getAddonInfo('version')))

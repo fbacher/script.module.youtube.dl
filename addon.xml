@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.youtube.dl" name="youtube-dl Control" version="2021.12.01.01"
+<addon id="script.module.yt-dlp" name="yt-dlp Control" version="21.1227.1"
        provider-name="fbacher,ytdl-org,ruuk,sy6sy2,wwark">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.addon.signals" version="0.0.6+matrix.1"/>
         <import addon="script.module.kodi-six" version="0.1.3.1"/>
     </requires>
+
     <extension point="xbmc.python.script" library="resources/code/control.py">
         <provides>executable</provides>
     </extension>
     <extension point="xbmc.python.module" library="resources/code/lib"/>
+
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary lang="en_GB">Module providing access to yt-dlp video stream extraction</summary>
         <description lang="en_GB">Module providing access to yt-dlp video stream extraction for hundreds of sites.
             yt-dlp is a successor to the youtube-dl project. The version of this module is
-            based on yt-dlp versioning: YYYY.MMM.DD.VV where VV is the addon specific sub-version. Also
+            based on yt-dlp versioning: YY.MMDD.V where V is the addon specific sub-version. Also
             provides downloading with the option for background downloading with a queue and queue manager.
         </description>
         <summary lang="el_EL">Βοηθητική μονάδα πρόσβασης στους επιλυτές youtube-dl για την εξαγωγή ροών βίντεο</summary>
@@ -33,8 +35,22 @@
         <license>LGPL-2.1-only, Unlicense</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=200877</forum>
         <source>https://github.com/fbacher/script.module.youtube.dl</source>
+        <news>21.1201.1 (Jan, 18, 2022)
+            Created this addon as a replacement for script.module.youtube.dl. At first tried to
+            simply swap out the dormant youtube-dl library for yt-dlp, but while compatible,
+            other issues made this difficult:
+            1- Some thought that since some addons might want to keep using the old addon.
+            2- Those wanting access to lower level yt-dlp/youtube-dl functions had to change
+            the path to access them
+            3- I wanted to add move all code to lib/k_yt_dlp instead of just in lib. This puts
+            symbols in a different namespace, instead of root-level.
+
+            I regret the inconvenience this will cause addon developers wishing to use
+            this addon, Fortunately the only changes should be: a) addon name b) import
+            paths need k_yt_dlp prefix.
+        </news>
         <assets>
-            <icon>icon.png</icon>
+            <icon>resources/icon.png</icon>
         </assets>
     </extension>
 </addon>

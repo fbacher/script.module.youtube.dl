@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
-import sys
-import json
 import binascii
-import xbmc
-from lib.yd_private_libs import util, servicecontrol, jsonqueue
-import YDStreamExtractor  # noqa E402
+import json
 import threading  # noqa E402
+
+import xbmc
+
 import AddonSignals
+import k_yt_dlp.YDStreamExtractor  as YDStreamExtractor  # noqa E402
+from k_yt_dlp.yd_private_libs import util, servicecontrol, jsonqueue
 
 
-class Service():
+class Service:
     def __init__(self):
         self.downloadCount = 0
         self.controller = servicecontrol.ServiceControl()

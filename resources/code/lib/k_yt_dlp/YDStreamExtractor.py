@@ -3,22 +3,16 @@ import time
 from kodi_six import xbmc
 import sys
 
-import YoutubeDLWrapper
+from k_yt_dlp import YoutubeDLWrapper
 
-import YDStreamUtils as StreamUtils
-from yd_private_libs import util, servicecontrol
+from k_yt_dlp import YDStreamUtils as StreamUtils
+import k_yt_dlp.yd_private_libs.util as util
+import k_yt_dlp.yd_private_libs.servicecontrol as servicecontrol
 
+import urllib.parse as urlparse
+from urllib.parse import urlencode
+import http.client as httplib
 
-PY3 = sys.version_info >= (3, 0)
-if PY3:
-    import urllib.parse as urlparse
-    from urllib.parse import urlencode
-    import http.client as httplib
-else:
-    import urlparse
-    import httplib
-    from urllib import urlencode
-    
 
 class DownloadResult:
     """
@@ -386,7 +380,7 @@ def downloadVideo(info, path):
 ###############################################################################
 def setOutputCallback(callback):
     """
-    Sets a callback for youtube-dl output or progress updates.
+    Sets a callback for yt-dlp output or progress updates.
     Must return True to continue or False to cancel.
     Will be called with CallbackMessage object.
     If the callback raises an exception it will be disabled.
@@ -431,7 +425,7 @@ def handleDownload(info, duration=None, bg=False, path=None, filename=None):
 def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     """
     Download the selected video in info to path.
-    Template sets the youtube-dl format which defaults to TITLE-ID.EXT.
+    Template sets the yt-dlp format which defaults to TITLE-ID.EXT.
     Returns a DownloadResult object.
     """
 
@@ -452,7 +446,8 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     signalPayload = {'title': ie_result['title'], 'url': ie_result['url'], 'download.ID': ie_result['download.ID']}
 
     try:
-        AddonSignals.sendSignal('download.started', signalPayload, source_id='script.module.youtube.dl')
+        AddonSignals.sendSignal('download.started', signalPayload,
+                                source_id='script.module.yt-dlp')
         dl_result = YoutubeDLWrapper.download(ie_result)
     except YoutubeDLWrapper.DownloadError as e:
         return DownloadResult(False, e.message, filepath=filepath)
@@ -461,10 +456,11 @@ def download(info, path, template='%(title)s-%(id)s.%(ext)s'):
     finally:
         ytdl.clearDownloadParams()
         signalPayload['path'] = filepath
-        AddonSignals.sendSignal('download.finished', signalPayload, source_id='script.module.youtube.dl')
+        AddonSignals.sendSignal('download.finished', signalPayload,
+                                source_id='script.module.yt-dlp')
 
-    # youtube-dl sometimes creates mkv file when merging non compatible parts,
-    # resulting in modified filepath. <ie_result> is fortunately updated in place by youtube-dl
+    # yt-dlp sometimes creates mkv file when merging non compatible parts,
+    # resulting in modified filepath. <ie_result> is fortunately updated in place by yt-dlp
     ext = ie_result['ext']
     if not filepath.endswith(ext):
         base, _ = os.path.splitext(filepath)
@@ -501,7 +497,7 @@ def disableDASHVideo(disable=True):
 
 def overrideParam(key, val):
     """
-    Override a youtube_dl parmeter.
+    Override a yt-dlp parameter.
     """
     YoutubeDLWrapper._OVERRIDE_PARAMS[key] = val
 
@@ -513,7 +509,7 @@ def generateBlacklist(regexs):
     Extractors that match any of the regular expressions are added.
     """
     import re
-    from yt_dlp.extractor import gen_extractors
+    from k_yt_dlp.yt_dlp.extractor import gen_extractors
     for ie in gen_extractors():
         for r in regexs:
             if re.search(r, ie.IE_NAME):
@@ -524,7 +520,7 @@ def manageDownloads():
     """
     Open the download manager.
     """
-    xbmc.executebuiltin('RunScript(script.module.youtube.dl)')
+    xbmc.executebuiltin('RunScript(script.module.yt-dlp)')
 
 
 def isDownloading():
